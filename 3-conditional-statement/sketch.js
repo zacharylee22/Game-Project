@@ -6,10 +6,11 @@ let me;
 
 
 function setup() {
-  createCanvas(500, 400);
+  createCanvas(500, 500);
 
   //make one avatar called me
   me = new Avatar(width/2, 300, 3);
+
 
 }
 
@@ -30,6 +31,8 @@ function draw(){
 	 	      balls[i].drawBall();
        	  balls[i].moveBall();
         	balls[i].bounceBall();
+          balls[i].edgexBall();
+          balls[i].edgeyBall();
 	  }
 
 }
@@ -64,6 +67,12 @@ class Avatar {
     if (keyIsDown(DOWN_ARROW)) { // if you hold the down arrow, move down by speed
         this.y += this.speed;
     }
+    if (keyIsDown(RIGHT_ARROW)){
+        this.x += this.speed
+    }
+    if (keyIsDown(LEFT_ARROW )){
+        this.x -= this.speed
+    }
 	}
 
   die(){
@@ -94,14 +103,31 @@ class Ball {
 	//update the location of the ball, so it moves across the screen
 	moveBall(){
 		this.x = this.x+ this.speed;
-		this.y = this.y+.5;
+		this.y = this.y+ 1;
 	}
 
 	//if the ball hits the person, change the speed value to negative (send it in the opposite direction)
   	bounceBall(){
     		if (this.x >= me.x-15 && this.x <= me.x+15 && this.y > me.y-40 && this.y < me.y+40){
       			this.speed = -this.speed;
+            fill(220)
+            circle(this.x,this.y,500);
     		}
   	}
-
+    edgexBall(){
+      if (this.x >= 500){
+        this.speed = -this.speed;
+      }
+      if (this.x <= 0){
+        this.speed = -this.speed;
+      }
+}
+  edgeyBall(){
+  if (this.y <= 500){
+    this.speed = -this.speed;
+  }
+  if (this.y >= 0){
+    this.speed = -this.speed;
+  }
+}
 }
